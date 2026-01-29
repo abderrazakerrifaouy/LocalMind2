@@ -1,24 +1,39 @@
-FROM php:8.2-apache
+FROM php:8.3-fpm-alpine
 
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    libzip-dev \
-    zip \
+RUN apk add --no-cache \
+    bash \
+    curl \
+    git \
     unzip \
+    zip \
+    postgresql-dev \
     nodejs \
     npm \
-    && docker-php-ext-install pdo pdo_mysql pdo_pgsql pgsql
+    build-base \
+    autoconf \
+    re2c \
+    libtool \
+    make \
+    pkgconfig \
+    zlib-dev \
+    oniguruma-dev \
+    libxml2-dev
 
-RUN a2enmod rewrite
+RUN docker-php-ext-install \
+    pdo \
+    pdo_pgsql \
+    pgsql \
+    mbstring \
+    xml \
+    bcmath \
+    opcache
+
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
 
-COPY apache.conf /etc/apache2/sites-available/000-default.conf
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
+RUN mkdir -p storage bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 storage bootstrap/cache
 
-EXPOSE 80
-
-
-
-
-
+USER www-data

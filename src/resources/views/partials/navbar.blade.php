@@ -50,7 +50,7 @@
                     </div>
                 @else
                     <a href="#" class="text-sm font-semibold text-gray-600 hover:text-indigo-600">Login</a>
-                    <a href="#" class="px-5 py-2.5 bg-indigo-600 text-white text-sm font-bold rounded-xl hover:bg-indigo-700 shadow-md shadow-indigo-100 transition">
+                    <a href="/register" class="px-5 py-2.5 bg-indigo-600 text-white text-sm font-bold rounded-xl hover:bg-indigo-700 shadow-md shadow-indigo-100 transition">
                         Join Community
                     </a>
                 @endauth

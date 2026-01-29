@@ -17,6 +17,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        // echo 'hello Login';
+        // die();
          $request->validate([
             'email' => ['required','email'],
             'password' => ['required'],
@@ -46,6 +48,7 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
+        
         $request->validate([
             'name' => ['required','string','max:255'],
             'email' => ['required','email','unique:users,email'],
@@ -60,10 +63,9 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect('/dashboard');
+        return redirect('/dashboardUser');
     }
 
-    // Handle logout
     public function logout(Request $request)
     {
         Auth::logout();
